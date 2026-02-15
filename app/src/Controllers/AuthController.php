@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Core\Database;
+use App\Models\User;
 
 class AuthController extends Controller {
     
@@ -18,11 +18,9 @@ class AuthController extends Controller {
     public function processLogin() {
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
-            
-        $db = Database::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
-        $stmt->execute(['email' => $email]);
-        $user = $stmt->fetch();
+
+        $userModel = new User();
+        $user = $userModel->firstWhere('email', $email);
 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
@@ -49,23 +47,19 @@ class AuthController extends Controller {
             ]);
         }
 
-        $db = Database::getInstance()->getConnection();
+        $userModel = new User();
         
         // Check if email exists
-        $stmt = $db->prepare("SELECT id FROM users WHERE email = :email");
-        $stmt->execute(['email' => $email]);
-        if ($stmt->fetch()) {
+        if ($userModel->firstWhere('email', $email)) {
             return $this->view('auth/register', [
                 'title' => 'Register',
                 'error' => 'Email sudah terdaftar'
             ]);
         }
 
-        // Insert user
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $db->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
         
-        if ($stmt->execute(['name' => $name, 'email' => $email, 'password' => $hashedPassword])) {
+        if ($userModel->create(['name' => $name, 'email' => $email, 'password' => $hashedPassword])) {
             header('Location: ' . BASE_URL . '/login?success=1');
             exit;
         }
