@@ -4,8 +4,8 @@ Framework PHP Native minimalis dengan struktur modern (MVC-ish) yang dioptimalka
 
 ## 🚀 Fitur Utama
 
-- **Zero Dependency**: Tidak butuh Composer atau library eksternal. Semua *core* ditulis *native*.
-- **Modern Structure**: Menggunakan konsep *Separation of Concerns* (Controller, View, Config terpisah).
+- **Zero Dependency**: Tidak butuh Composer atau library eksternal. Semua _core_ ditulis _native_.
+- **Modern Structure**: Menggunakan konsep _Separation of Concerns_ (Controller, View, Config terpisah).
 - **Environment Variables**: Dukungan file `.env` untuk konfigurasi sensitif.
 - **Eloquent-like Models**: Sistem Model sederhana untuk interaksi database yang lebih mudah (`find`, `where`, `create`, `all`).
 - **Database Migrations**: Sistem version control untuk skema database menggunakan CLI.
@@ -40,9 +40,11 @@ htdocs/                  # Root Web Server (Document Root)
 ## 🛠️ Manajemen Database
 
 ### 1. Migrasi Database
+
 Sistem ini memiliki tool migrasi bawaan untuk mengelola struktur database.
 
 **Cara Menjalankan Migrasi (di dalam container Devilbox):**
+
 ```bash
 # Masuk ke container (jika belum)
 ./shell.bat
@@ -57,9 +59,11 @@ Buat file PHP di `app/database/migrations/` dengan format nama `YYYY_MM_DD_HHMMS
 Contoh struktur file migrasi bisa dilihat di `app/database/migrations/2026_02_15_000000_CreateUsersTable.php`.
 
 ### 2. Menggunakan Model
+
 Gunakan class Model untuk berinteraksi dengan database tanpa menulis SQL mentah.
 
 **Contoh Penggunaan:**
+
 ```php
 use App\Models\User;
 
@@ -83,9 +87,26 @@ $userModel->create([
 ]);
 ```
 
+### 3. Membuat Controller Otomatis
+
+Anda bisa membuat file Controller baru dengan cepat menggunakan CLI.
+
+**Cara Penggunaan:**
+
+```bash
+# Masuk ke folder project di dalam container
+cd /shared/httpd/my-project/htdocs
+
+# Format: php bin/make-controller.php [NamaController]
+php bin/make-controller.php Product
+```
+
+Perintah di atas akan membuat file `app/src/Controllers/ProductController.php` dengan template dasar.
+
 ## 🐞 Debugging & Logging
 
 ### Helper `dd()`
+
 Anda bisa menggunakan fungsi `dd($variable)` (Dump and Die) di mana saja dalam kode untuk men-debug variabel dengan tampilan yang rapi.
 
 ```php
@@ -94,18 +115,8 @@ dd($users); // Aplikasi akan berhenti dan menampilkan isi $users
 ```
 
 ### Error Logging
+
 Gunakan `error_log()` untuk mencatat error ke file log server (biasanya bisa dicek via Devilbox dashboard atau file log PHP).
-
-## 📅 Fitur Booking System
-
-Sistem ini mencakup 4 fase alur kerja pemesanan:
-
-1.  **Fase Pencarian (Availability Check)**: User memilih tanggal/jam, sistem mengecek bentrokan jadwal di tabel `bookings`.
-2.  **Fase Reservasi**: Slot dikunci sementara (status `pending`), data masuk ke database.
-3.  **Fase Pembayaran**: Integrasi pembayaran, status berubah menjadi `confirmed`, generate QR Code.
-4.  **Fase Operasional**: Check-in di lokasi menggunakan QR Code.
-
-Tabel pendukung: `users`, `rooms`, `bookings`, `payments`.
 
 ## 🚀 Cara Menjalankan Project
 
