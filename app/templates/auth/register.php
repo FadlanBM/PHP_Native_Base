@@ -18,7 +18,12 @@
                     <!-- Form -->
                     <div class="row">
                         <div class="col-12">
-                            <form class="form-horizontal mt-3 form-material" id="loginform" action="index.html">
+                            <?php if (isset($error)): ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <?php echo $error; ?>
+                                </div>
+                            <?php endif; ?>
+                            <form class="form-horizontal mt-3 form-material" id="loginform"  action="<?php echo BASE_URL; ?>/register" method="POST">
                                 <div class="form-group mb-3">
                                     <input class="form-control" type="text" required="" placeholder="Username">
                                 </div>

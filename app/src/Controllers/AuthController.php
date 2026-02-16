@@ -36,11 +36,12 @@ class AuthController extends Controller {
     }
 
     public function processRegister() {
-        $name = $_POST['name'] ?? '';
+        $username = $_POST['username'] ?? '';
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
+        dd($email, $password, $username);
 
-        if (empty($name) || empty($email) || empty($password)) {
+        if (empty($username) || empty($email) || empty($password)) {
             return $this->view('auth/register', [
                 'title' => 'Register',
                 'error' => 'Semua kolom wajib diisi'
@@ -59,7 +60,7 @@ class AuthController extends Controller {
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         
-        if ($userModel->create(['name' => $name, 'email' => $email, 'password' => $hashedPassword])) {
+        if ($userModel->create(['username' => $username, 'email' => $email, 'password' => $hashedPassword])) {
             header('Location: ' . BASE_URL . '/login?success=1');
             exit;
         }
