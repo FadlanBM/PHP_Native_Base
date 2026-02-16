@@ -10,6 +10,8 @@
     <title><?php echo isset($data['title']) ? $data['title'] : 'Monster Admin TemplaWWte - The Most Complete & Trusted Bootstrap 4 Admin Template'; ?></title>
 	<link rel="canonical" href="https://www.wrappixel.com/templates/monsteradmin/" />
     <!-- Custom CSS -->
+    <link href="<?php echo BASE_URL; ?>/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL; ?>/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
     <link href="<?php echo BASE_URL; ?>/assets/css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,4 +33,5 @@
         ga('create', 'UA-85622565-1', 'auto');
         ga('send', 'pageview');
     </script>
+    
 </head>

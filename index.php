@@ -33,7 +33,7 @@ $router = new \App\Core\Router();
 $router->get('/', [\App\Controllers\HomeController::class, 'index']);
 
 // Dashboard protected with AuthMiddleware
-$router->get('/dashboard', [\App\Controllers\HomeController::class, 'index'], [\App\Middleware\AuthMiddleware::class]);
+$router->get('/dashboard', [\App\Controllers\DashboardController::class, 'index']);
 
 // Auth Routes
 $router->get('/login', [\App\Controllers\AuthController::class, 'login']);
