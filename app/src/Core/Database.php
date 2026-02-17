@@ -12,6 +12,7 @@ class Database
 
     private function __construct()
     {
+        $connection = defined('DB_CONNECTION') ? DB_CONNECTION : 'mysql';
         $host = DB_HOST;
         $port = DB_PORT;
         $db   = DB_NAME;
@@ -19,7 +20,13 @@ class Database
         $pass = DB_PASS;
         $charset = 'utf8mb4';
 
-        $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
+        if ($connection === 'pgsql') {
+            $dsn = "pgsql:host=$host;port=$port;dbname=$db";
+        } else {
+            // Default to MySQL
+            $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
+        }
+
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

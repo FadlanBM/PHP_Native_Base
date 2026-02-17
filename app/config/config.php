@@ -1,6 +1,7 @@
 <?php
 
 // Database Configuration
+define('DB_CONNECTION', getenv('DB_CONNECTION') ?: 'mysql');
 define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
 define('DB_PORT', getenv('DB_PORT') ?: '3306');
 define('DB_NAME', getenv('DB_DATABASE') ?: 'my_project');

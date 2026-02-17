@@ -31,11 +31,21 @@ class Migrator
 
     protected function initTable()
     {
-        $this->db->exec("CREATE TABLE IF NOT EXISTS migrations (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            migration VARCHAR(255),
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )");
+        $driver = $this->db->getAttribute(\PDO::ATTR_DRIVER_NAME);
+
+        if ($driver === 'pgsql') {
+            $this->db->exec("CREATE TABLE IF NOT EXISTS migrations (
+                id SERIAL PRIMARY KEY,
+                migration VARCHAR(255),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )");
+        } else {
+            $this->db->exec("CREATE TABLE IF NOT EXISTS migrations (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                migration VARCHAR(255),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )");
+        }
     }
 
     public function run()
